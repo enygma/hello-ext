@@ -9,6 +9,12 @@ PHP_FUNCTION(howdy)
     RETURN_STRING("Howdy y'all\n", 1);
 }
 
+PHP_MINIT_FUNCTION(hello)
+{
+    // nothing to see
+    return SUCCESS;
+}
+
 PHP_MINFO_FUNCTION(hello)
 {
     php_info_print_table_start();
@@ -26,7 +32,7 @@ zend_module_entry hello_module_entry = {
     STANDARD_MODULE_HEADER,
     PHP_HELLO_EXTNAME,
     hello_functions,
-    NULL,
+    PHP_MINIT(hello),
     NULL,
     NULL,
     NULL,
