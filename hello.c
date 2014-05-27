@@ -18,7 +18,6 @@ PHP_MINIT_FUNCTION(hello)
 PHP_MINFO_FUNCTION(hello)
 {
     php_info_print_table_start();
-    php_info_print_table_header(2, "Hello Library Bindings", "enabled");
     php_info_print_table_row(2, "Extension Version", PHP_HELLO_VERSION);
     php_info_print_table_end();
 }
