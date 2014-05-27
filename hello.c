@@ -1,14 +1,24 @@
 #include "php_hello.h"
 #include "ext/standard/info.h"
 
-PHP_MINFO_FUNCTION(hello) {
+ZEND_BEGIN_ARG_INFO(hello_version_args, ZEND_SEND_BY_VAL)
+ZEND_END_ARG_INFO()
+
+PHP_FUNCTION(howdy)
+{
+    RETURN_STRING("Howdy y'all\n", 1);
+}
+
+PHP_MINFO_FUNCTION(hello)
+{
     php_info_print_table_start();
-    php_info_print_table_header(2, "Uriparser Library Bindings", "enabled");
+    php_info_print_table_header(2, "Hello Library Bindings", "enabled");
     php_info_print_table_row(2, "Extension Version", PHP_HELLO_VERSION);
     php_info_print_table_end();
 }
 
 static const zend_function_entry hello_functions[] = {
+    PHP_FE(howdy, hello_version_args)
     ZEND_FE_END
 };
 
