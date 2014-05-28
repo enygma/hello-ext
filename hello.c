@@ -1,21 +1,30 @@
 #include "php_hello.h"
 #include "ext/standard/info.h"
 
-ZEND_BEGIN_ARG_INFO(hello_version_args, ZEND_SEND_BY_VAL)
+ZEND_BEGIN_ARG_INFO(hello_version_args, 0)
+    ZEND_ARG_INFO(0, name)
 ZEND_END_ARG_INFO()
 
-PHP_FUNCTION(howdy)
+static PHP_FUNCTION(howdy)
 {
-    RETURN_STRING("Howdy y'all\n", 1);
+    char *name;
+    // char buffer[20];
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name) == FAILURE) {
+        RETURN_FALSE;
+    }
+
+    // snprintf(buffer, sizeof(buffer), "%s", buffer);
+    // RETURN_STRING(buffer, 1);
+    RETURN_STRING("test y'all\n", 1);
 }
 
-PHP_MINIT_FUNCTION(hello)
+static PHP_MINIT_FUNCTION(hello)
 {
-    // nothing to see
     return SUCCESS;
 }
 
-PHP_MINFO_FUNCTION(hello)
+static PHP_MINFO_FUNCTION(hello)
 {
     php_info_print_table_start();
     php_info_print_table_row(2, "Extension Version", PHP_HELLO_VERSION);
@@ -24,7 +33,7 @@ PHP_MINFO_FUNCTION(hello)
 
 static const zend_function_entry hello_functions[] = {
     PHP_FE(howdy, hello_version_args)
-    ZEND_FE_END
+    PHP_FE_END
 };
 
 zend_module_entry hello_module_entry = {

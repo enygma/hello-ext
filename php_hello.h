@@ -14,6 +14,8 @@
 
 #include "php.h"
 
+PHP_FUNCTION(howdy);
+
 extern zend_module_entry hello_module_entry;
 #define phpext_hello_ptr &hello_module_entry
 
