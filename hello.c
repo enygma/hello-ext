@@ -1,38 +1,43 @@
 #include "php_hello.h"
 #include "ext/standard/info.h"
 
-ZEND_BEGIN_ARG_INFO(hello_version_args, 0)
-    ZEND_ARG_INFO(0, name)
+/* {{{ arginfo */
+ZEND_BEGIN_ARG_INFO(arginfo_hello, 0)
+    ZEND_ARG_INFO(0, fname)
 ZEND_END_ARG_INFO()
+/* }}} */
 
-static PHP_FUNCTION(howdy)
-{
-    char *name;
-    // char buffer[20];
-
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &name) == FAILURE) {
-        RETURN_FALSE;
-    }
-
-    // snprintf(buffer, sizeof(buffer), "%s", buffer);
-    // RETURN_STRING(buffer, 1);
-    RETURN_STRING("test y'all\n", 1);
-}
-
-static PHP_MINIT_FUNCTION(hello)
+PHP_MINIT_FUNCTION(hello)
 {
     return SUCCESS;
 }
 
-static PHP_MINFO_FUNCTION(hello)
+PHP_MINFO_FUNCTION(hello)
 {
     php_info_print_table_start();
     php_info_print_table_row(2, "Extension Version", PHP_HELLO_VERSION);
     php_info_print_table_end();
 }
 
+/* {{{ proto string howdy(string name)
+   Return a "howdy" string with the name included */
+PHP_FUNCTION(howdy)
+{
+    char *fname;
+    /* char buffer[20]; */
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &fname) == FAILURE) {
+        return;
+    }
+
+    /* snprintf(buffer, sizeof(buffer), "%s", buffer);
+    RETURN_STRING(buffer, 1); */
+    RETURN_STRING("test y'all\n", 1);
+}
+/* }}} */
+
 static const zend_function_entry hello_functions[] = {
-    PHP_FE(howdy, hello_version_args)
+    PHP_FE(howdy, arginfo_hello)
     PHP_FE_END
 };
 
